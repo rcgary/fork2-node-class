@@ -1,4 +1,9 @@
-module.exports = function Class(c,p) {
-  var constructor = c.initialize || function () {};
+module.exports = function Class(args) {
+  var constructor = args.initialize || function () {};
+  for(var i in args) {
+    if (args[i].hasOwnProperty && typeof args[i] == 'function' && i != 'initialize') {
+      constructor.prototype[i] = args[i];
+    }
+  }
   return constructor;
 };
